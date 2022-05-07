@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-project_id="$PROJECT_ID"
-project_number="$PROJECT_NUMBER"
+project_id="PROJECT_ID"
+project_number="PROJECT_NUMBER"
