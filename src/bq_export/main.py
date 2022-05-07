@@ -11,7 +11,7 @@ def bq_to_gcs(event, context):
   bucket_name = "BUCKET_NAME"
   project = "PROJECT_ID"
   dataset_id = "DATASET_ID"
-  table_id = "TALBE_ID"
+  table_id = "TABLE_ID"
 
   # Create params for ingestion
   # Month abbreviation, day and year

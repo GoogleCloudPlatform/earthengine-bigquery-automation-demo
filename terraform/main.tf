@@ -99,6 +99,9 @@ data "archive_file" "bq_export_source" {
     type        = "zip"
     source_dir  = "../src/bq_export"
     output_path = "tmp/bq_export_function.zip"
+    depends_on   = [ 
+        null_resource.clean_up_main_python
+    ]
 }
 
 
@@ -106,6 +109,9 @@ data "archive_file" "ee_upload_source" {
     type        = "zip"
     source_dir  = "../src/ee_upload"
     output_path = "tmp/ee_upload_function.zip"
+    depends_on   = [ 
+        null_resource.clean_up_main_python
+    ]
 }
 
 # Add source code zip to the Cloud Function's bucket
