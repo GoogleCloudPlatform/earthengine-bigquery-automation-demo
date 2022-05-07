@@ -2,6 +2,8 @@ locals {
   bq_export_bucket = "${var.project_id}-bq_export_bucket"
   ee_export_bucket = "${var.project_id}-ee_export_bucket"
   cron_topic="${var.project_id}-cron_topic"
+  dataset_id="earth_engine_demo"
+  table_id="plantboundaries"
 }
 /******************************************
 1. Project Services Configuration
@@ -78,6 +80,20 @@ resource "google_storage_bucket" "function_bucket" {
     uniform_bucket_level_access       = true
     force_destroy                     = true
 }
+#clean up the main.py variables
+resource "null_resource" "clean_up_main_python" {
+  provisioner "local-exec" {
+    command = <<-EOT
+    sed -i "s|PROJECT_ID|${var.project_id}|g" ../src/bq_export/main.py 
+    sed -i "s|BUCKET_NAME|${local.bq_export_bucket}|g" ../src/bq_export/main.py 
+    sed -i "s|DATASET_ID|${local.dataset_id}|g" ../src/bq_export/main.py 
+    sed -i "s|TABLE_ID|${local.table_id}|g" ../src/bq_export/main.py 
+    sed -i "s|PROJECT_ID|${var.project_id}|g" ../src/ee_upload/main.py 
+   EOT
+  }
+
+  depends_on = [google_bigquery_dataset.ee_dataset]
+}
 
 data "archive_file" "bq_export_source" {
     type        = "zip"
@@ -126,6 +142,16 @@ resource "google_storage_bucket_object" "ee_upload_zip" {
     ]
 }
 
+#clean up the main.py variables
+resource "null_resource" "clean_up_main_python" {
+  provisioner "local-exec" {
+    command = <<-EOT
+      
+   EOT
+  }
+
+  depends_on = [google_bigquery_dataset.ee_dataset]
+}
 
 # Create the Cloud function triggered by a `Finalize` event on the bucket
 resource "google_cloudfunctions_function" "bq_export_function" {
@@ -183,7 +209,7 @@ resource "google_cloudfunctions_function" "ee_upload_function" {
  *****************************************/
 
 resource "google_bigquery_dataset" "ee_dataset" {
-  dataset_id                  = "ee_dataset"
+  dataset_id                  = local.dataset_id
   friendly_name               = "ee_dataset"
   description                 = "This is a earth engine dataset"
   location                    = var.region
@@ -191,11 +217,6 @@ resource "google_bigquery_dataset" "ee_dataset" {
 
   labels = {
     env = "default"
-  }
-
-  access {
-    role          = "roles/bigquery.dataEditor"
-    user_by_email = "${var.project_id}@appspot.gserviceaccount.com"
   }
 
 }
@@ -208,7 +229,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
  resource "null_resource" "import_csv_to_bq" {
   provisioner "local-exec" {
     command = <<-EOT
-    bq load --source_format=CSV --allow_quoted_newlines=true --field_delimiter='|' ${google_bigquery_dataset.ee_dataset.dataset_id}.plantboundaries plantboundaries.csv Geography:string
+    bq load --source_format=CSV --allow_quoted_newlines=true --field_delimiter='|' ${local.dataset_id}.${local.table_id} ${local.table_id}.csv Geography:string
   EOT
   }
 

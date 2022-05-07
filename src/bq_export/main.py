@@ -8,10 +8,10 @@ def bq_to_gcs(event, context):
   client = google.cloud.bigquery.Client()
 
   # Set the necessary values for Big Query Assets
-  bucket_name = "ee_export_bucket"
-  project = "rick-geo-enterprise"
-  dataset_id = "earth_engine_demo"
-  table_id = "plantboundaries"
+  bucket_name = "BUCKET_NAME"
+  project = "PROJECT_ID"
+  dataset_id = "DATASET_ID"
+  table_id = "TALBE_ID"
 
   # Create params for ingestion
   # Month abbreviation, day and year

@@ -12,7 +12,7 @@ def gcs_to_ee(event, context):
     event: Event payload.
   """
   # Get GCS location of file creation that triggered function
-  project_id = "MY_PROJECT_ID"
+  project_id = "PROJECT_ID"
   file = event
   path = "gs://" + file["bucket"] + "/" + file["name"]
   file_title = file["name"].rsplit(".", 1)[0]
