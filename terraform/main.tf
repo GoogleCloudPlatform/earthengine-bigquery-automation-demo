@@ -142,17 +142,6 @@ resource "google_storage_bucket_object" "ee_upload_zip" {
     ]
 }
 
-#clean up the main.py variables
-resource "null_resource" "clean_up_main_python" {
-  provisioner "local-exec" {
-    command = <<-EOT
-      
-   EOT
-  }
-
-  depends_on = [google_bigquery_dataset.ee_dataset]
-}
-
 # Create the Cloud function triggered by a `Finalize` event on the bucket
 resource "google_cloudfunctions_function" "bq_export_function" {
     name                  = "bq-export-to-gcs"
