@@ -161,7 +161,7 @@ resource "google_cloudfunctions_function" "ee_upload_function" {
 
     # Get the source code of the cloud function as a Zip compression
     source_archive_bucket = google_storage_bucket.function_bucket.name
-    source_archive_object = google_storage_bucket_object.ee_up_load_zip.name
+    source_archive_object = google_storage_bucket_object.ee_upload_zip.name
 
     # Must match the function name in the cloud function `main.py` source code
     entry_point           = "gcs_to_ee"
