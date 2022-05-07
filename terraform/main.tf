@@ -47,7 +47,7 @@ resource "google_storage_bucket" "ee_export_bucket" {
 3. Create a pubsub topic
  *****************************************/
 resource "google_pubsub_topic" "bq_export_topic" {
-  name = "cron-bq-export-topic"
+  name = var.cron_topic
 
   labels = {
     job = "cron-job"
@@ -194,7 +194,11 @@ resource "google_bigquery_dataset" "ee_dataset" {
   }
 
   access {
-    role          = "roels/bigquery.dataEditorr"
+    role          = "roles/bigquery.dataEditor"
+    user_by_email = "${var.project_id}@appspot.gserviceaccount.com"
+  }
+  access {
+    role          = "roles/bigquery.jobUser"
     user_by_email = "${var.project_id}@appspot.gserviceaccount.com"
   }
 
