@@ -50,7 +50,7 @@ resource "google_pubsub_topic" "bq_export_topic" {
   name = "cron-bq-export-topic"
 
   labels = {
-    job = "cron bq to gcs"
+    job = "cron-job"
   }
 
   message_retention_duration = "86600s"
@@ -194,7 +194,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
   }
 
   access {
-    role          = "EDITOR"
+    role          = "roels/bigquery.dataEditorr"
     user_by_email = "${var.project_id}@appspot.gserviceaccount.com"
   }
 
