@@ -208,7 +208,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
  resource "null_resource" "import_csv_to_bq" {
   provisioner "local-exec" {
     command = <<-EOT
-    bq load --source_format=CSV --allow_quoted_newlines=true --field_delimiter='|' ${google_bigquery_dataset.ee_dataset.dataset_id} plantboundaries.csv Geography:string
+    bq load --source_format=CSV --allow_quoted_newlines=true --field_delimiter='|' ${google_bigquery_dataset.ee_dataset.dataset_id}.plantboundaries plantboundaries.csv Geography:string
   EOT
   }
 
