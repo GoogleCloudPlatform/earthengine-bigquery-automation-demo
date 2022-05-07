@@ -47,7 +47,7 @@ resource "google_storage_bucket" "ee_export_bucket" {
 3. Create a pubsub topic
  *****************************************/
 resource "google_pubsub_topic" "bq_export_topic" {
-  name = var.cron_topic
+  name = local.cron_topic
 
   labels = {
     job = "cron-job"
