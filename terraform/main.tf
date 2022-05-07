@@ -57,13 +57,12 @@ resource "google_pubsub_topic" "bq_export_topic" {
 }
 
 /******************************************
-4. Create a cloud scheduler
+4.Create a cloud scheduler
  *****************************************
 resource "google_cloud_scheduler_job" "job" {
   name        = "cron-bq-export-job"
   description = "bq export job"
   schedule    = "*/1 * * * *"
-
   pubsub_target {
     # topic.id is the topic's full resource name.
     topic_name = google_pubsub_topic.bq_export_topic.id
