@@ -27,7 +27,7 @@ module "activate_service_apis" {
 
 /******************************************
 2. Create 2 Storge Buckets
- *****************************************
+ *****************************************/
 
 resource "google_storage_bucket" "bq_export_bucket" {
   name                              = local.bq_export_bucket
@@ -45,7 +45,7 @@ resource "google_storage_bucket" "ee_export_bucket" {
 
 /******************************************
 3. Create a pubsub topic
- *****************************************
+ *****************************************/
 resource "google_pubsub_topic" "bq_export_topic" {
   name = "cron-bq-export-topic"
 
@@ -58,11 +58,11 @@ resource "google_pubsub_topic" "bq_export_topic" {
 
 /******************************************
 4.Create a cloud scheduler
- *****************************************
+ *****************************************/
 resource "google_cloud_scheduler_job" "job" {
   name        = "cron-bq-export-job"
   description = "bq export job"
-  schedule    = "*/1 * * * *"
+  schedule    = "* * * * *"
   pubsub_target {
     # topic.id is the topic's full resource name.
     topic_name = google_pubsub_topic.bq_export_topic.id
@@ -71,7 +71,7 @@ resource "google_cloud_scheduler_job" "job" {
 }
 /******************************************
 5. Create cloud functions
- *****************************************
+ *****************************************/
 resource "google_storage_bucket" "function_bucket" {
     name     = "${var.project_id}-function"
     location = var.region
@@ -180,7 +180,7 @@ resource "google_cloudfunctions_function" "ee_upload_function" {
 }
 /******************************************
 6. Create BigQuery Dataset
- *****************************************
+ *****************************************/
 
 resource "google_bigquery_dataset" "ee_dataset" {
   dataset_id                  = "ee_dataset"
@@ -203,7 +203,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
 
 /******************************************
 7. Upload csv file to bigquery table
- *****************************************
+ *****************************************/
 
  resource "null_resource" "import_csv_to_bq" {
   provisioner "local-exec" {
