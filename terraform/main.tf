@@ -116,7 +116,7 @@ resource "google_storage_bucket_object" "ee_upload_zip" {
 
     # Append to the MD5 checksum of the files's content
     # to force the zip to be updated as soon as a change occurs
-    name         = "src-${data.archive_file.ee_export_source.output_md5}.zip"
+    name         = "src-${data.archive_file.ee_upload_source.output_md5}.zip"
     bucket       = google_storage_bucket.function_bucket.name
 
     # Dependencies are automatically inferred so these lines can be deleted
@@ -143,7 +143,7 @@ resource "google_cloudfunctions_function" "bq_export_function" {
     event_trigger {
       event_type= "google.pubsub.topic.publish"
       resource= "projects/${var.project_id}/${local.cron_topic}"
-      service= "pubsub.googleapis.com"
+      #service= "pubsub.googleapis.com"
    }
 
     # Dependencies are automatically inferred so these lines can be deleted
