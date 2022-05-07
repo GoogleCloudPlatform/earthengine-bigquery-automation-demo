@@ -142,7 +142,7 @@ resource "google_cloudfunctions_function" "bq_export_function" {
     # 
     event_trigger {
       event_type= "google.pubsub.topic.publish"
-      resource= "projects/${var.project_id}/${local.cron_topic}"
+      resource= "${local.cron_topic}"
       #service= "pubsub.googleapis.com"
    }
 
@@ -195,10 +195,6 @@ resource "google_bigquery_dataset" "ee_dataset" {
 
   access {
     role          = "roles/bigquery.dataEditor"
-    user_by_email = "${var.project_id}@appspot.gserviceaccount.com"
-  }
-  access {
-    role          = "roles/bigquery.jobUser"
     user_by_email = "${var.project_id}@appspot.gserviceaccount.com"
   }
 
