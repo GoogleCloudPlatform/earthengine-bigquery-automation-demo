@@ -237,7 +237,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
 8. Create earth engine service account
  *****************************************/
 resource "google_service_account" "earth_engine_sa" {
-  account_id   = local.earth_engine_sa
+  account_id   = "${local.earth_engine_sa}"
   display_name = "A service account that for earth engine"
 }
 
