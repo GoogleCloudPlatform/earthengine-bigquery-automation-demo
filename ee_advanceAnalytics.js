@@ -7,14 +7,11 @@
 
  var hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8"),
  project = 'PROJECT_ID',
- asset = 'MONTH-DD-YYYY',
+ asset = 'ASSET_ID',
 
  errorMargin = 1e7,
- importBucket = 'BUCKET_NAME',
+ importBucket = 'PROJECT_ID-ee_export_bucket',
  table = ee.FeatureCollection("projects/"+project+"/assets/"+ asset);
-
-
-
 
 //Set UI components 
 /**************
@@ -258,7 +255,7 @@ var filename = 'changeStats' + Date()
 Export.table.toCloudStorage({
 collection: aggregateFeature,
 description:'advancedAnalyticsToCloudStorage',
-bucket: 'ee_imports_237818',
+bucket: importBucket,
 fileNamePrefix: filename ,
 fileFormat: 'CSV'
 });

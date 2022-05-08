@@ -7,14 +7,12 @@
  */
 
  var hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8"),
- project = 'rick-geo-enterprise',
- asset =  'may-06-2022',
+ project = 'PROJECT_ID',
+ asset =  'ASSET_ID',
  table = ee.FeatureCollection("projects/"+project+"/assets/"+ asset),
  errorMargin = 1e7,
- advancedAnalyticsLink = 'https://code.earthengine.google.com/49ed33a38712475cb3755562e04782dd';
+ advancedAnalyticsLink = 'ADVANCE_URL';
  
- 
-
 /**************
 * Components *
 **************/
