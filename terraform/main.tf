@@ -4,7 +4,7 @@ locals {
   cron_topic="${var.project_id}-cron_topic"
   dataset_id="earth_engine_demo"
   table_id="plantboundaries"
-  earth_engine_sa="${var.project_id}-earth-engine-sa"
+  
 }
 /******************************************
 1. Project Services Configuration
@@ -237,7 +237,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
 8. Create earth engine service account
  *****************************************/
 resource "google_service_account" "earth_engine_sa" {
-  account_id   = "${local.earth_engine_sa}"
+  account_id   = "earth-engine-demo-sa"
   display_name = "A service account that for earth engine"
 }
 
