@@ -4,6 +4,7 @@ locals {
   cron_topic="${var.project_id}-cron_topic"
   dataset_id="earth_engine_demo"
   table_id="plantboundaries"
+  earth_engine_sa="${var.project_id}-earth-engine-sa"
 }
 /******************************************
 1. Project Services Configuration
@@ -20,7 +21,8 @@ module "activate_service_apis" {
     "storage.googleapis.com",
     "earthengine.googleapis.com",
     "cloudfunctions.googleapis.com",
-    "pubsub.googleapis.com"
+    "pubsub.googleapis.com",
+    "cloudscheduler.googleapis.com"
   ]
 
   disable_services_on_destroy = false
@@ -230,3 +232,44 @@ resource "google_bigquery_dataset" "ee_dataset" {
 
   depends_on = [google_bigquery_dataset.ee_dataset]
 }
+
+/******************************************
+8. Create earth engine service account
+ *****************************************/
+resource "google_service_account" "earth_engine_sa" {
+  account_id   = local.earth_engine_sa
+  display_name = "A service account that for earth engine"
+}
+
+
+/******************************************
+9. Cloud function SA IAM policy bindings
+ *****************************************/
+resource "google_project_iam_binding" "set_storage_binding" {
+  project = var.project_id
+  role               = "roles/storage.admin"
+  members  =  ["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
+  
+}
+
+resource "google_project_iam_binding" "set_storage_binding" {
+  project = var.project_id
+  role               = "roles/bigquery.dataEditor"
+  members  =  ["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
+  
+}
+
+resource "google_project_iam_binding" "set_storage_binding" {
+  project = var.project_id
+  role               = "roles/bigquery.jobUser"
+  members  =  ["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
+  
+}
+
+resource "google_project_iam_binding" "set_storage_binding" {
+  project = var.project_id
+  role               = "roles/earthengine.writer"
+  members  =  ["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
+  
+}
+
