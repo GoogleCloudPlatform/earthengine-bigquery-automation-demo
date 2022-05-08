@@ -252,14 +252,14 @@ resource "google_project_iam_binding" "set_storage_binding" {
   
 }
 
-resource "google_project_iam_binding" "set_storage_binding" {
+resource "google_project_iam_binding" "set_bq_data_binding" {
   project = var.project_id
   role               = "roles/bigquery.dataEditor"
   members  =  ["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
   
 }
 
-resource "google_project_iam_binding" "set_storage_binding" {
+resource "google_project_iam_binding" "set_bq_jb_binding" {
   project = var.project_id
   role               = "roles/bigquery.jobUser"
   members  =  ["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
