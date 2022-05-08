@@ -73,7 +73,12 @@ Create apps for app.js
 - In next screen, type in app.js.
 - Click Next, and then Publish
 - In next screen, there will be URL link below the app-name. Validate the URL works after a minute
+Validations:
+- Open the app link
+- Click "Advanced Analytics" button in right panel
+- A separate window will open 
+- Click the Run button, 
+- Check on/off different Tree Cover layers
 
-
-## Congratulations!
+## Congratulations! Demo completed successfully
 
