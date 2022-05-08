@@ -266,10 +266,4 @@ resource "google_project_iam_binding" "set_storage_binding" {
   
 }
 
-resource "google_project_iam_binding" "set_storage_binding" {
-  project = var.project_id
-  role               = "roles/earthengine.writer"
-  members  =  ["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
-  
-}
 
