@@ -62,4 +62,18 @@ Create a script
 - After task run completed, go to Cloud Storage bucket PROJECT_ID-ee_export_bucket and verify file created
 
 ## 6. Create Earth Engine apps
+Update link for app.js
+- From advanceAnalytics.js in Code Editor, click Get Link dropdown, click Copy script path,
+- Switch to app.js in Code Editor, in line 14, replace the ADVANCE_URL with script path just copied. Save app.js
+Create apps for app.js
+- Click apps from app.js Code Editor
+- Click New App
+- Provide App Name, Choose Existing Project
+- IN source code step, choose Repository script Path.
+- In next screen, type in app.js.
+- Click Next, and then Publish
+- In next screen, there will be URL link below the app-name. Validate the URL works after a minute
+
+
+## Congratulations!
 
