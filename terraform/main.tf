@@ -266,4 +266,15 @@ resource "google_project_iam_binding" "set_bq_jb_binding" {
   
 }
 
+/******************************************
+10. Earth Engine Python API installation
+ *****************************************/
+resource "null_resource" "earth_engine_python_Api" {
+  provisioner "local-exec" {
+    command = <<-EOT
+    pip install earthengine-api --upgrade
+  EOT
+  }
 
+  depends_on = [google_bigquery_dataset.ee_dataset]
+}
