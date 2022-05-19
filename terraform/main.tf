@@ -22,11 +22,20 @@ module "activate_service_apis" {
     "earthengine.googleapis.com",
     "cloudfunctions.googleapis.com",
     "pubsub.googleapis.com",
-    "cloudscheduler.googleapis.com"
+    "cloudscheduler.googleapis.com",
+    "cloudbuild.googleapis.com"
   ]
 
   disable_services_on_destroy = false
   
+}
+
+resource "time_sleep" "sleep_after_activate_service_apis" {
+  create_duration = "60s"
+
+  depends_on = [
+    module.activate_service_apis
+  ]
 }
 
 /******************************************
