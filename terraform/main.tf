@@ -75,7 +75,7 @@ resource "google_pubsub_topic" "bq_export_topic" {
 resource "google_cloud_scheduler_job" "job" {
   name        = "cron-bq-export-job"
   description = "bq export job"
-  schedule    = "* * * * *"
+  schedule    = "0 12 * * SUN"
   pubsub_target {
     # topic.id is the topic's full resource name.
     topic_name = google_pubsub_topic.bq_export_topic.id
@@ -219,7 +219,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
   friendly_name               = "ee_dataset"
   description                 = "This is a earth engine dataset"
   location                    = var.region
-  default_table_expiration_ms = 3600000
+  default_table_expiration_ms = 604,800,000
 
   labels = {
     env = "default"

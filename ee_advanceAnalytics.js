@@ -7,7 +7,7 @@
 
  var hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8"),
  project = 'PROJECT_ID',
- asset = 'ASSET_ID',
+ // asset = 'ASSET_ID',
 
  errorMargin = 1e7,
  importBucket = 'PROJECT_ID-ee_export_bucket',

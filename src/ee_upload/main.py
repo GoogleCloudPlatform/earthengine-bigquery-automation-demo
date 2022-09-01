@@ -18,8 +18,7 @@ def gcs_to_ee(event, context):
   file_title = file["name"].rsplit(".", 1)[0]
 
   # Set up auth
-  service_account = 'earth-engine-sa@rick-geo-enterprise.iam.gserviceaccount.com'
-  credentials = ee.ServiceAccountCredentials(service_account, '.private-key.json')
+  credentials = google.auth.default()
   ee.Initialize(credentials)
 
   # Create request id
