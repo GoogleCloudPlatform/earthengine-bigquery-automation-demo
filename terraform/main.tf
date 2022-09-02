@@ -39,7 +39,36 @@ resource "time_sleep" "sleep_after_activate_service_apis" {
 }
 
 /******************************************
-2. Create 2 Storge Buckets
+2. Project-scoped Org Policy Relaxing
+*****************************************/
+
+module "org_policy_allow_ingress_settings" {
+source = "terraform-google-modules/org-policy/google"
+policy_for = "project"
+project_id = var.project_id
+constraint = "constraints/cloudfunctions.allowedIngressSettings"
+policy_type = "list"
+enforce = false
+allow= ["IngressSettings.ALLOW_ALL"]
+depends_on = [
+time_sleep.sleep_after_activate_service_apis
+]
+}
+
+module "org_policy_allow_domain_membership" {
+source = "terraform-google-modules/org-policy/google"
+policy_for = "project"
+project_id = var.project_id
+constraint = "constraints/iam.allowedPolicyMemberDomains"
+policy_type = "list"
+enforce = false
+depends_on = [
+time_sleep.sleep_after_activate_service_apis
+]
+}
+
+/******************************************
+3. Create 2 Storge Buckets
  *****************************************/
 
 resource "google_storage_bucket" "bq_export_bucket" {
@@ -57,7 +86,7 @@ resource "google_storage_bucket" "ee_export_bucket" {
 }
 
 /******************************************
-3. Create a pubsub topic
+4. Create a pubsub topic
  *****************************************/
 resource "google_pubsub_topic" "bq_export_topic" {
   name = local.cron_topic
@@ -70,7 +99,7 @@ resource "google_pubsub_topic" "bq_export_topic" {
 }
 
 /******************************************
-4.Create a cloud scheduler
+5.Create a cloud scheduler
  *****************************************/
 resource "google_cloud_scheduler_job" "job" {
   name        = "cron-bq-export-job"
@@ -83,7 +112,7 @@ resource "google_cloud_scheduler_job" "job" {
   }
 }
 /******************************************
-5. Create cloud functions
+6. Create cloud functions
  *****************************************/
 resource "google_storage_bucket" "function_bucket" {
     name     = "${var.project_id}-function"
@@ -211,7 +240,7 @@ resource "google_cloudfunctions_function" "ee_upload_function" {
     ]
 }
 /******************************************
-6. Create BigQuery Dataset
+7. Create BigQuery Dataset
  *****************************************/
 
 resource "google_bigquery_dataset" "ee_dataset" {
@@ -219,7 +248,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
   friendly_name               = "ee_dataset"
   description                 = "This is a earth engine dataset"
   location                    = var.region
-  default_table_expiration_ms = 604,800,000
+  default_table_expiration_ms = 604800000
 
   labels = {
     env = "default"
@@ -229,7 +258,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
 
 
 /******************************************
-7. Upload csv file to bigquery table
+8. Upload csv file to bigquery table
  *****************************************/
 
  resource "null_resource" "import_csv_to_bq" {
@@ -243,7 +272,7 @@ resource "google_bigquery_dataset" "ee_dataset" {
 }
 
 /******************************************
-8. Create earth engine service account
+9. Create earth engine service account
  *****************************************/
 resource "google_service_account" "earth_engine_sa" {
   account_id   = "earth-engine-demo-sa"
@@ -252,7 +281,7 @@ resource "google_service_account" "earth_engine_sa" {
 
 
 /******************************************
-9. Cloud function SA IAM policy bindings
+10. Cloud function SA IAM policy bindings
  *****************************************/
 resource "google_project_iam_binding" "set_storage_binding" {
   project = var.project_id
@@ -276,7 +305,7 @@ resource "google_project_iam_binding" "set_bq_jb_binding" {
 }
 
 /******************************************
-10. Earth Engine Python API installation
+11. Earth Engine Python API installation
  *****************************************/
 resource "null_resource" "earth_engine_python_Api" {
   provisioner "local-exec" {
