@@ -1,4 +1,4 @@
-# earth-engine-demo
+# BigQuery to Earth Engine automation with Cloud Function
 
 ## 1. Sign-up Earth Engine
 Sign up with the project owner/admin email account
@@ -15,16 +15,18 @@ cd $HOME/earth-engine-demo && chmod +x start.sh
 If something goes wrong, run ./start/sh again.
 
 Set permissions
+- Sign up with the service account with Earth Engine
+- [Earth Engine Service account Sign-up](https://signup.earthengine.google.com/#!/service_accounts)
 - Go to Service Accounts under IAM in your cloud project
-- Identify the service account named 'Compute Engine default service account' and copy the email address
-- On the IAM page, click Add  
-- Set New Principal: copied email address and Role: Earth Engine Resource Writer
+- Identify the service account named 'App Engine default service account' and copy the email address
+- In Earth Engine registration sign-up screen, enter the service account email in box: Register a new service account for XXXX,
+  click "Register service account" button, the service account will show up in the Current service accounts list
+
 
 Validation steps:
 - Go to BigQuery console, check the dataset and table created. 
 - Go to Cloud Scheduler screen, run the job task manually
 - Go to Cloud storage, and check the PROJECT_ID-bq_export_bucket, verify one csv file created with current date as file name( Month-DD-YYYY)
-
 
 ## 3. Open Earth Engine Code Editor and connect to GCP project
 -   [Web Code Editor](https://code.earthengine.google.com/)

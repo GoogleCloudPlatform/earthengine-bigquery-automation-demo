@@ -17,6 +17,8 @@ limitations under the License.
 import ee
 import google.auth
 
+from google.auth import compute_engine
+
 
 def gcs_to_ee(event, context):
   """Creates an Earth Engine asset from data in Cloud Storage.
@@ -34,7 +36,11 @@ def gcs_to_ee(event, context):
   file_title = file["name"].rsplit(".", 1)[0]
 
   # Set up auth
-  credentials = google.auth.default()
+  scopes = [
+    "https://www.googleapis.com/auth/earthengine"
+   ]
+
+  credentials = compute_engine.Credentials(scopes=scopes)
   ee.Initialize(credentials)
 
   # Create request id
