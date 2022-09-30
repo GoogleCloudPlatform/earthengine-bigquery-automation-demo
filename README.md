@@ -9,7 +9,7 @@ Go to cloud shell, run the following commands
 ```shellcript
 cd $HOME
 git clone https://github.com/GoogleCloudPlatform/earthengine-bigquery-automation-demo.git
-cd $HOME/earth-engine-demo && chmod +x start.sh
+cd $HOME/earthengine-bigquery-automation-demo && chmod +x start.sh
 ./start.sh
 ```
 If something goes wrong, run ./start/sh again.
