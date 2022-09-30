@@ -40,7 +40,7 @@ Validation steps:
 ### run base script in Code Editor
 Create a script
 - Click Script tab in Code Editor console. Create a new Script, give name as app.js (you may need to create a folder first when prompt to do so)
-- Copy the contents of cloud shell $HOME/earth-engine-demo/ee_app.js to app.js in Code Editor screen
+- Copy the contents of cloud shell $HOME/earthengine-bigquery-automation-demo/ee_app.js to app.js in Code Editor screen
 - Change line 10 with proper values for PROJECT_ID 
 <!--- - Change line 11 with proper values for ASSET_ID (check the asset tab from Code Editor) --->
 - Click Save and Run button in Code Editor console
@@ -49,7 +49,7 @@ Create a script
 ### run advanced analytics script in Code Editor
 Create a script
 - Click Script tab in Code Editor console. Create a new Script, give name as adavanceAnalytics.js
-- Copy the contents of cloud shell $HOME/earth-engine-demo/ee_advanceAnlytics.js to advanceAnalytics.js in Code Editor screen
+- Copy the contents of cloud shell $HOME/earthengine-bigquery-automation-demoo/ee_advanceAnlytics.js to advanceAnalytics.js in Code Editor screen
 - Change line 9 and line 13 with proper values for PROJECT_ID 
 <!--- - Change line 110 with proper values for ASSET_ID (check the asset tab from Code Editor) --->
 - Click Save and Run button in Code Editor console
