@@ -331,7 +331,7 @@ data "google_compute_default_service_account" "default" {
 resource "google_project_iam_binding" "set_ee_binding" {
   project = var.project_id
   role               = "roles/earthengine.writer"
-  members  =  ["serviceAccount:${data.google_compute_default_service_account.default.email}"]
+  members  =["serviceAccount:${var.project_id}@appspot.gserviceaccount.com"]
 
 }
 
